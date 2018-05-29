@@ -14,7 +14,7 @@ class App extends Component {
       food: ''
     }
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   getData() {
@@ -34,8 +34,10 @@ class App extends Component {
     this.getData();
   }
 
-  handleChange(event){
-    this.setState({food: event.target.value}, this.getData);
+  handleKeyPress(event) {
+    if(event.key == 'Enter'){
+      this.setState({food: event.target.value}, this.getData);
+    }
   }
 
   renderGroup() {
@@ -49,9 +51,10 @@ class App extends Component {
               <img src={result.image_url} alt="recipe image" className="card-img-top foodCardImage" />
             </div>
             <div className="card-body foodCardBody">
-              <div className="card-title">{result.title}</div>
+              <h6 className="card-title foodCardTitle">{result.title}</h6>
             </div>
           </div>
+          <a href={result.publisher_url} className="foodCardPublisher" target="_blank">{result.publisher}</a>
         </div>
       )
       if ((index+1) % 4 == 0) {
@@ -67,10 +70,10 @@ class App extends Component {
   render() {
     return (
       <div className="mainContainer">
+        <h1 class="siteTitle">WhatToCook</h1>
         <div className="searchForm">
           <input type="text"
-            value={this.state.food}
-            onChange={this.handleChange}
+            onKeyPress={this.handleKeyPress}
             className="searchInput" placeholder="Search Ingredients..." />
           <div className="searchIcon">
             <IoIosSearchStrong size={40} color="#e85454" />
